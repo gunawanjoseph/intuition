@@ -23,29 +23,6 @@ class LLMProvider:
     def analyze(self, prompt: str) -> str:
         raise NotImplementedError
 
-
-class GeminiProvider(LLMProvider):
-    """Google Gemini API provider (FREE tier available)."""
-    
-    def __init__(self):
-        self.api_key = os.getenv('GEMINI_API_KEY')
-        if not self.api_key or self.api_key == 'your-gemini-api-key-here':
-            raise ValueError("GEMINI_API_KEY not set in .env file")
-        
-        # Use google-genai library
-        from google import genai
-        self.client = genai.Client(api_key=self.api_key)
-        self.model_name = 'gemini-2.0-flash'
-        print("[LLM] Using Google Gemini (FREE)")
-    
-    def analyze(self, prompt: str) -> str:
-        response = self.client.models.generate_content(
-            model=self.model_name,
-            contents=prompt
-        )
-        return response.text
-
-
 class GroqProvider(LLMProvider):
     """Groq API provider (FREE tier available)."""
     
@@ -75,66 +52,6 @@ class GroqProvider(LLMProvider):
             max_tokens=500
         )
         return response.choices[0].message.content
-
-
-class OpenAIProvider(LLMProvider):
-    """OpenAI API provider (paid)."""
-    
-    def __init__(self):
-        self.api_key = os.getenv('OPENAI_API_KEY')
-        if not self.api_key or self.api_key == 'your-openai-api-key-here':
-            raise ValueError("OPENAI_API_KEY not set in .env file")
-        
-        from openai import OpenAI
-        self.client = OpenAI(api_key=self.api_key)
-        print("[LLM] Using OpenAI (paid)")
-    
-    def analyze(self, prompt: str) -> str:
-        response = self.client.chat.completions.create(
-            model="gpt-4.1-mini",
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a helpful assistant that analyzes screen content to help users with memory difficulties remember what they were doing. Be concise and accurate. Always respond with valid JSON only."
-                },
-                {
-                    "role": "user",
-                    "content": prompt
-                }
-            ],
-            temperature=0.3,
-            max_tokens=500
-        )
-        return response.choices[0].message.content
-
-
-def get_llm_provider() -> LLMProvider:
-    """Get the configured LLM provider."""
-    provider_name = os.getenv('LLM_PROVIDER', 'gemini').lower()
-    
-    providers = {
-        'gemini': GeminiProvider,
-        'groq': GroqProvider,
-        'openai': OpenAIProvider
-    }
-    
-    if provider_name not in providers:
-        print(f"[LLM] Unknown provider '{provider_name}', defaulting to Gemini")
-        provider_name = 'gemini'
-    
-    try:
-        return providers[provider_name]()
-    except Exception as e:
-        print(f"[LLM] Failed to initialize {provider_name}: {e}")
-        # Try fallback providers
-        for fallback in ['gemini', 'groq', 'openai']:
-            if fallback != provider_name:
-                try:
-                    print(f"[LLM] Trying fallback: {fallback}")
-                    return providers[fallback]()
-                except:
-                    continue
-        raise ValueError("No LLM provider could be initialized. Please check your .env file.")
 
 
 class ContextAnalyzer:
