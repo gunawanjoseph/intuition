@@ -1,6 +1,6 @@
-# MindTrace
+# Focus.AI
 
-**MindTrace** is a desktop accessibility tool designed to help users with ADHD, dementia, or high cognitive load stay focused. It acts as a persistent digital memory, providing instant context about your recent activities with a single click.
+**Focus.AI** is a desktop accessibility tool designed to help users with ADHD, dementia, or high cognitive load stay focused. It acts as a persistent digital memory, providing instant context about your recent activities with a single click.
 
 
 ## The Problem
@@ -9,7 +9,7 @@ In today's digital world, a single notification can derail a task, leading to a 
 
 ## The Solution
 
-MindTrace provides a **cognitive safety net**. It runs quietly in the background, observing your on-screen activity. When you get distracted and lose your train of thought, a single click on the persistent MindTrace icon brings up a panel summarizing exactly what you were doing and highlighting key information like OTPs, names, or confirmation numbers.
+Focus.AI provides a **cognitive safety net**. It runs quietly in the background, observing your on-screen activity. When you get distracted and lose your train of thought, a single click on the persistent Focus.AI icon brings up a panel summarizing exactly what you were doing and highlighting key information like OTPs, names, or confirmation numbers.
 
 ## Key Features
 
@@ -37,7 +37,7 @@ MindTrace provides a **cognitive safety net**. It runs quietly in the background
 
 ## Setup and Installation
 
-Follow these steps to get MindTrace running on your system.
+Follow these steps to get Focus.AI running on your system.
 
 ### 1. Prerequisites
 
@@ -50,8 +50,8 @@ First, get the project files onto your local machine.
 ```bash
 # Example: If you have the files in a zip, unzip them first.
 # Or if it's a git repository:
-# git clone https://github.com/your-repo/mindtrace.git
-# cd mindtrace
+# git clone https://github.com/your-repo/Focus.AI.git
+# cd Focus.AI
 ```
 
 ### 3. Set Up a Virtual Environment (Recommended)
@@ -82,7 +82,7 @@ pip install -r requirements.txt
 
 ### 5. Configure Your API Key
 
-MindTrace needs an LLM API key to understand your context.
+Focus.AI needs an LLM API key to understand your context.
 
 1.  **Copy the example `.env` file**:
     ```bash
