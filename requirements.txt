@@ -1,0 +1,31 @@
+# Memory Context Overlay - Dependencies
+# Install with: pip install -r requirements.txt
+
+# Environment configuration
+python-dotenv>=1.0.0
+
+# Screen capture
+mss>=9.0.0
+
+# OCR text extraction
+easyocr>=1.7.0
+
+# GUI framework
+PyQt6>=6.5.0
+
+# Image processing
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# ============================================
+# LLM Providers (install the one you'll use)
+# ============================================
+
+# Google Gemini (FREE - recommended)
+google-genai>=1.0.0
+
+# Groq (FREE alternative)
+groq>=0.4.0
+
+# OpenAI (paid)
+openai>=1.0.0
