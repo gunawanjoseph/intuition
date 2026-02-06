@@ -1,150 +1,212 @@
-# Focus.AI
+# Memory Context Overlay
 
-**Focus.AI** is a desktop accessibility tool designed to help users with ADHD, dementia, or high cognitive load stay focused. It acts as a persistent digital memory, providing instant context about your recent activities with a single click.
+A desktop application designed to help users with ADHD or dementia stay focused by providing context about what they were doing. When you get distracted by a notification or lose focus, simply click the overlay icon to instantly recall your recent activity.
 
+## Features
 
-## The Problem
+- **Persistent Overlay Icon**: A small, always-visible brain icon (🧠) in the bottom-left corner of your screen
+- **Continuous Screen Monitoring**: Captures screen content at ~3 FPS, maintaining a rolling 1-minute context window
+- **Smart Text Extraction**: Uses EasyOCR to extract text from screen captures
+- **AI-Powered Context Analysis**: Every ~10 seconds, analyzes screen content to understand what you're doing
+- **Multiple FREE LLM Options**: Choose from Google Gemini (free), Groq (free), or OpenAI (paid)
+- **Key Information Detection**: Automatically detects and stores important information like:
+  - OTP/verification codes
+  - Email addresses
+  - Phone numbers
+  - Names
+  - URLs/links
+  - Prices
+  - Order/tracking numbers
+- **Info Panel**: Click the icon to see:
+  - Activity Summary: "You were doing: [task] using [app]"
+  - Key Information: List of detected important items
 
-In today's digital world, a single notification can derail a task, leading to a 23-minute struggle to refocus. For individuals with ADHD or dementia, this problem is magnified, turning simple digital tasks like online banking or booking appointments into frustrating challenges. The constant need to switch between apps (e.g., for a one-time password) breaks concentration and leads to task abandonment.
+## Requirements
 
-## The Solution
+- **Python**: 3.9 or higher
+- **Operating System**: Windows 10/11, macOS 10.15+, or Linux with X11
+- **API Key**: Free options available (see below)
+- **Display**: Works best with a single monitor setup
 
-Focus.AI provides a **cognitive safety net**. It runs quietly in the background, observing your on-screen activity. When you get distracted and lose your train of thought, a single click on the persistent Focus.AI icon brings up a panel summarizing exactly what you were doing and highlighting key information like OTPs, names, or confirmation numbers.
+## Installation
 
-## Key Features
+### 1. Clone or Download
 
-- **Persistent Overlay**: A small, non-intrusive 🧠 icon is always visible in the corner of your screen.
-- **Continuous Screen Monitoring**: Captures screen content at ~3 FPS, maintaining a rolling 1-minute context window.
-- **Smart Context Analysis**: Uses an LLM (like Google Gemini, Groq, or OpenAI) to analyze extracted text every 10-60 seconds, identifying the current task and key information.
-- **Instant Recall Panel**: On-click panel displays:
-    - **Activity Summary**: "You were doing: [task description] using [app name]"
-    - **Key Information**: A list of detected OTPs, verification codes, names, links, prices, etc.
-- **Privacy-First**: All screen capture and OCR processing happens locally on your device.
-- **Multi-Provider LLM Support**: Easily switch between free (Gemini, Groq) and paid (OpenAI) language models.
+Download and extract the project files to your preferred location.
 
-## Tech Stack
-
-| Component | Technology | Purpose |
-| :--- | :--- | :--- |
-| **GUI / Overlay** | PyQt6 | For the cross-platform persistent icon and info panel. |
-| **Screen Capture** | `mss` | High-performance, low-overhead screen grabbing. |
-| **Text Extraction** | `EasyOCR` | Local, offline-capable OCR to read text from images. |
-| **AI Context** | `google-genai`, `groq`, `openai` | Flexible LLM integration for context analysis. |
-| **Configuration** | `python-dotenv` | Easy management of API keys and settings. |
-| **Language** | Python 3.9+ | The core language of the application. |
-
----
-
-## Setup and Installation
-
-Follow these steps to get Focus.AI running on your system.
-
-### 1. Prerequisites
-
-- **Python 3.9+**: Ensure you have Python installed. On macOS, you will likely use the `python3` command. You can download it from [python.org](https://python.org/downloads/).
-
-### 2. Clone the Repository
-
-First, get the project files onto your local machine.
-
-```bash
-# Example: If you have the files in a zip, unzip them first.
-# Or if it's a git repository:
-# git clone https://github.com/your-repo/Focus.AI.git
-# cd Focus.AI
-```
-
-### 3. Set Up a Virtual Environment (Recommended)
-
-Using a virtual environment prevents conflicts with system-wide packages. This is **required on modern macOS**.
-
-```bash
-# Navigate to the project directory
-cd /path/to/your/project
-
-# Create a virtual environment named 'venv'
-python3 -m venv venv
-
-# Activate the virtual environment
-# On macOS/Linux:
-source venv/bin/activate
-# On Windows:
-.\venv\Scripts\activate
-```
-
-### 4. Install Dependencies
-
-Once the virtual environment is active, install the required Python packages.
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 5. Configure Your API Key
+### 3. Configure Your API Key (Easy!)
 
-Focus.AI needs an LLM API key to understand your context.
+**Edit the `.env` file** in the project folder. Choose ONE of these FREE options:
 
-1.  **Copy the example `.env` file**:
-    ```bash
-    cp .env.example .env
-    ```
-2.  **Get a FREE API Key**:
-    - **Groq (Recommended)**: Go to [console.groq.com/keys](https://console.groq.com/keys). It's extremely fast and has a generous free tier.
-    - **Google Gemini**: Go to [aistudio.google.com/apikey](https://aistudio.google.com/apikey).
-3.  **Edit the `.env` file** and add your key:
+#### Option A: Google Gemini (Recommended - FREE)
+1. Go to https://aistudio.google.com/apikey
+2. Click "Create API Key" (no credit card needed!)
+3. Copy the key
+4. Paste it in `.env`:
+```
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=your-actual-key-here
+```
 
-    ```ini
-    # LLM_PROVIDER can be 'groq', 'gemini', or 'openai'
-    LLM_PROVIDER=groq
+#### Option B: Groq (FREE)
+1. Go to https://console.groq.com/keys
+2. Create an account (no credit card needed!)
+3. Create a new API key
+4. Paste it in `.env`:
+```
+LLM_PROVIDER=groq
+GROQ_API_KEY=your-actual-key-here
+```
 
-    # --- API KEYS (only fill the one you are using) ---
-    GROQ_API_KEY=gsk_your_groq_api_key_here
-    GEMINI_API_KEY=AIzaSy_your_gemini_api_key_here
-    OPENAI_API_KEY=
-    ```
-
----
+#### Option C: OpenAI (Paid)
+1. Go to https://platform.openai.com/api-keys
+2. Create a new secret key
+3. Paste it in `.env`:
+```
+LLM_PROVIDER=openai
+OPENAI_API_KEY=your-actual-key-here
+```
 
 ## Usage
 
-With your virtual environment active and `.env` file configured, run the application:
+### Quick Start
 
+**Windows:** Double-click `run_windows.bat`
+
+**macOS/Linux:**
 ```bash
+./run_unix.sh
+# or
 python run.py
 ```
 
-- The first time you run it, EasyOCR may need to download its language models (this can take a few minutes).
-- Once initialized, you will see the 🧠 icon in the bottom-left corner of your screen.
-- Click the icon at any time to see your current context!
-- To quit the application, press `Ctrl+C` in the terminal.
+### How It Works
+
+1. **Launch**: Start the application using one of the methods above
+2. **Look for the Icon**: A 🧠 icon appears in the bottom-left corner of your screen
+3. **Continue Working**: The app silently monitors your screen in the background
+4. **Get Context**: When you need to remember what you were doing, click the icon
+5. **View Info Panel**: See your recent activity and any important information detected
+
+### Info Panel Sections
+
+- **Activity Summary**: Describes what you were doing (e.g., "Writing an email to John about the project deadline")
+- **Application**: Shows which app/website you were using (e.g., "Gmail - Chrome")
+- **Key Information**: Lists important items with icons:
+  - 🔐 OTP/Verification codes
+  - 📧 Email addresses
+  - 📞 Phone numbers
+  - 👤 Names
+  - 🔗 URLs/Links
+  - 💰 Prices/Amounts
+  - 📅 Dates
+  - 📦 Order/Tracking numbers
 
 ## Configuration
 
-You can customize the app's behavior by editing `config.py`:
+### Environment Variables (.env file)
 
-- `CAPTURE_FPS`: How many times per second to capture the screen (default: `3.0`).
-- `ANALYSIS_INTERVAL`: How often (in seconds) to send screen text to the LLM for analysis (default: `10.0`). Increase this to reduce API usage.
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `LLM_PROVIDER` | Which AI to use: `gemini`, `groq`, or `openai` | Yes |
+| `GEMINI_API_KEY` | Your Google Gemini API key | If using Gemini |
+| `GROQ_API_KEY` | Your Groq API key | If using Groq |
+| `OPENAI_API_KEY` | Your OpenAI API key | If using OpenAI |
 
-## File Architecture
+### Advanced Settings (config.py)
+
+```python
+# Screen capture frequency
+CAPTURE_FPS = 3.0
+
+# How long to keep history
+BUFFER_DURATION = 60  # seconds
+
+# How often to analyze context
+ANALYSIS_INTERVAL = 10.0  # seconds
+
+# Icon position
+ICON_POSITION = "bottom-left"
+```
+
+## Project Structure
 
 ```
-. (root)
-├── .env                  # Your private API keys and settings
-├── .env.example          # Template for the .env file
-├── README.md             # This file
-├── QUICKSTART.md         # A shorter guide to get started
-├── config.py             # Application settings (FPS, intervals)
-├── requirements.txt      # List of Python dependencies
-├── run.py                # Main executable script to launch the app
-├── run_unix.sh           # Launcher script for macOS/Linux
-└── run_windows.bat       # Launcher script for Windows
-│
-└── src/                  # Source code directory
-    ├── __init__.py
-    ├── context_analyzer.py # Handles LLM communication and context analysis
-    ├── gui_overlay.py      # Manages the PyQt6 icon and info panel
-    ├── main.py             # Integrates all components and runs the main app loop
-    ├── ocr_extractor.py    # Extracts text from screen captures using EasyOCR
-    └── screen_capture.py   # Manages the screen capture thread
-
+memory_context_overlay/
+├── src/
+│   ├── __init__.py          # Package initialization
+│   ├── main.py               # Main application entry point
+│   ├── screen_capture.py     # Screen capture module
+│   ├── ocr_extractor.py      # OCR text extraction
+│   ├── context_analyzer.py   # LLM context analysis (multi-provider)
+│   └── gui_overlay.py        # PyQt6 GUI components
+├── tests/                    # Unit tests
+├── .env                      # ⬅️ PUT YOUR API KEY HERE
+├── .env.example              # Template for .env
+├── config.py                 # Configuration settings
+├── requirements.txt          # Python dependencies
+├── run.py                    # Python launcher script
+├── run_windows.bat           # Windows launcher
+├── run_unix.sh               # macOS/Linux launcher
+└── README.md                 # This file
 ```
+
+## Troubleshooting
+
+### "API KEY NOT CONFIGURED"
+Edit the `.env` file and add your API key. See the Installation section above.
+
+### Icon not appearing
+- Check if another application is using the bottom-left corner
+- Try restarting the application
+- On Linux, ensure you're running an X11 session (Wayland may have issues)
+
+### OCR is slow
+- EasyOCR loads models on first use, which can take 30-60 seconds
+- Subsequent extractions are much faster
+- Consider reducing `CAPTURE_FPS` in config.py
+
+### High CPU usage
+- Reduce `CAPTURE_FPS` to 1.0 or 2.0
+- Increase `ANALYSIS_INTERVAL` to 15.0 or 20.0
+
+### Panel shows "Analyzing your activity..."
+- Wait for the first analysis cycle (up to 10 seconds)
+- Check that your API key is valid in the `.env` file
+- Look at the terminal for error messages
+
+## Privacy & Security
+
+- **Local Processing**: Screen captures are processed locally and never uploaded
+- **API Calls**: Only extracted text is sent to the LLM for analysis
+- **No Storage**: Screenshots are not saved to disk (unless debug mode is enabled)
+- **Rolling Buffer**: Old data is automatically discarded after 60 seconds
+
+## LLM Provider Comparison
+
+| Provider | Cost | Speed | Quality | Credit Card Required |
+|----------|------|-------|---------|---------------------|
+| **Gemini** | FREE | Fast | Excellent | No |
+| **Groq** | FREE | Very Fast | Good | No |
+| **OpenAI** | ~$0.10-0.50/day | Fast | Excellent | Yes |
+
+## Known Limitations
+
+- Single monitor support (uses primary monitor)
+- English text recognition only (can be extended in config)
+- Requires active internet connection for LLM analysis
+- May not work well with very fast-changing content (videos, games)
+
+## License
+
+This project is provided as-is for personal use. Feel free to modify and extend it for your needs.
+
+---
+
+**Remember**: This tool is designed to help, not to replace good focus habits. Use it as a safety net when you get distracted, and consider combining it with other focus techniques like the Pomodoro method.
