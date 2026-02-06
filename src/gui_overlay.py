@@ -135,7 +135,7 @@ class InfoPanel(QWidget):
         layout.setSpacing(15)
         
         # Header
-        header = QLabel("🧠 Memory Context")
+        header = QLabel("🧠 Focus AI")
         header.setStyleSheet("""
             QLabel {
                 color: #4A90D9;
