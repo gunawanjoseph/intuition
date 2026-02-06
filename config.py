@@ -4,15 +4,15 @@ Modify these settings to customize the application behavior.
 """
 
 # Screen Capture Settings
-CAPTURE_FPS = 1.0  # Frames per second for screen capture
+CAPTURE_FPS = 3.0  # Frames per second for screen capture
 BUFFER_DURATION = 60  # Seconds of screen history to keep
 
 # OCR Settings
 OCR_LANGUAGES = ['en']  # Languages for text recognition
-OCR_PROCESS_INTERVAL = 10.0  # Seconds between OCR processing
+OCR_PROCESS_INTERVAL = 1.0  # Seconds between OCR processing
 
 # LLM Analysis Settings
-ANALYSIS_INTERVAL = 30.0  # Seconds between LLM context analysis
+ANALYSIS_INTERVAL = 10.0  # Seconds between LLM context analysis
 LLM_MODEL = "gpt-4.1-mini"  # OpenAI model to use
 LLM_TEMPERATURE = 0.3  # Lower = more focused responses
 LLM_MAX_TOKENS = 500  # Maximum response length

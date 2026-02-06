@@ -123,13 +123,13 @@ python run.py
 
 ```python
 # Screen capture frequency
-CAPTURE_FPS = 1.0
+CAPTURE_FPS = 3.0
 
 # How long to keep history
 BUFFER_DURATION = 60  # seconds
 
 # How often to analyze context
-ANALYSIS_INTERVAL = 30.0  # seconds
+ANALYSIS_INTERVAL = 10.0  # seconds
 
 # Icon position
 ICON_POSITION = "bottom-left"

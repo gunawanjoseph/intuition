@@ -25,7 +25,6 @@ GEMINI_API_KEY=AIzaSy...your-actual-key-here
 ```
 
 Save the file.
-We have also included our default free API key, so feel free to skip this step.
 
 ## Step 4: Run the App
 
@@ -48,9 +47,6 @@ python run.py
 ## That's It! 🎉
 
 The app runs silently in the background. Click the brain icon whenever you need to remember what you were doing.
-
-## Notes
-Set up will take a few minutes before the AI can start recognizing your screen and what you are currently doing.
 
 ## Alternative FREE Option: Groq
 
